@@ -39,9 +39,10 @@ endfunction
 
 nnoremap <silent> <Plug>(goyo-off) :call <sid>goyo_off()<cr>
 
+" line 44
 function! s:blank(repel)
   if bufwinnr(t:goyo_pads.r) <= bufwinnr(t:goyo_pads.l) + 1
-    " \ || bufwinnr(t:goyo_pads.b) <= bufwinnr(t:goyo_pads.t) + 3
+    \ || bufwinnr(t:goyo_pads.b) <= bufwinnr(t:goyo_pads.t) + 3
     call feedkeys("\<Plug>(goyo-off)")
   endif
   execute 'noautocmd wincmd' a:repel
@@ -96,8 +97,9 @@ function! s:resize_pads()
   let yoff = s:const(t:goyo_dim.yoff, - vmargin, vmargin)
   let top = vmargin + yoff
   let bot = vmargin - yoff - 1
-  " call s:setup_pad(t:goyo_pads.t, 0, top, 'j')
-  " call s:setup_pad(t:goyo_pads.b, 0, bot, 'k')
+  " 2 following lines
+  call s:setup_pad(t:goyo_pads.t, 0, top, 'j')
+  call s:setup_pad(t:goyo_pads.b, 0, bot, 'k')
 
   let nwidth  = max([len(string(line('$'))) + 1, &numberwidth])
   let width   = t:goyo_dim.width + (&number ? nwidth : 0)
@@ -254,8 +256,9 @@ function! s:goyo_on(dim)
 
   let t:goyo_pads.l = s:init_pad('vertical topleft new')
   let t:goyo_pads.r = s:init_pad('vertical botright new')
-  " let t:goyo_pads.t = s:init_pad('topleft new')
-  " let t:goyo_pads.b = s:init_pad('botright new')
+  " 2 following lines
+  let t:goyo_pads.t = s:init_pad('topleft new')
+  let t:goyo_pads.b = s:init_pad('botright new')
 
   call s:resize_pads()
   call s:tranquilize()
@@ -389,7 +392,8 @@ endfunction
 
 function! s:parse_arg(arg)
   if exists('g:goyo_height') || !exists('g:goyo_margin_top') && !exists('g:goyo_margin_bottom')
-    let height = s:relsz(get(g:, 'goyo_height', '85%'), &lines)
+    " let height = s:relsz(get(g:, 'goyo_height', '85%'), &lines)
+    let height = s:relsz(get(g:, 'goyo_height', '100%'), &lines)
     let yoff = 0
   else
     let top = max([0, s:relsz(get(g:, 'goyo_margin_top', 4), &lines)])
